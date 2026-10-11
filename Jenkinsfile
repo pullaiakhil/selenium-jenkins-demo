@@ -1,46 +1,30 @@
+
 pipeline {
     agent any
 
-    tools {
-        jdk 'JDK17'
-        maven 'Maven3'
-    }
-
-    options {
-        timestamps()
-        timeout(time: 15, unit: 'MINUTES')
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Check Java') {
             steps {
-                checkout scm
+                bat 'java -version'
             }
         }
 
-        stage('Build') {
+        stage('Run Selenium Tests') {
             steps {
-                bat 'mvn -B -DskipTests compile'
-            }
-        }
-
-        stage('Selenium Tests') {
-            steps {
-                bat 'mvn -B test'
+                bat '''
+                cd /d "C:\\Users\\AKHIL PULLAI\\Downloads\\Selenium_Jenkins_Source_Code\\selenium-jenkins-demo"
+                call "C:\\Users\\AKHIL PULLAI\\Downloads\\apache-maven-3.10.0-bin\\apache-maven-3.10.0\\bin\\mvn.cmd" clean test
+                '''
             }
         }
     }
 
     post {
-        always {
-            junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
-            archiveArtifacts artifacts: '**/target/surefire-reports/*', allowEmptyArchive: true
-        }
         success {
-            echo 'Build and Selenium tests completed successfully.'
+            echo 'Selenium tests completed successfully!'
         }
         failure {
-            echo 'Build or Selenium tests failed. Check the console output and test report.'
+            echo 'Selenium tests failed. Check Console Output.'
         }
     }
 }
