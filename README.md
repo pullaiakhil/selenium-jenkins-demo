@@ -73,3 +73,4 @@ Checkout -> Build/compile -> Selenium tests -> Publish JUnit report.
 
 ## Important
 This is an educational CI pipeline demonstrating build and automated test execution. It is not deploying an application to production. Add a deployment stage only when you have a target environment and deployment credentials managed securely.
+Testing Jenkins polling
