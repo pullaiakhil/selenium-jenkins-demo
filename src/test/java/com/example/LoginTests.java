@@ -61,4 +61,10 @@ public class LoginTests {
         assertTrue(driver.findElement(By.id("password")).isDisplayed());
         assertTrue(driver.findElement(By.id("loginButton")).isDisplayed());
     }
+        @Test
+    void loginPageHasCorrectTitle() {
+        driver.get(LoginPage.url());
+        assertEquals("Demo Login", driver.getTitle());
+    }
 }
+
